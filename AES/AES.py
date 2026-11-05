@@ -1,12 +1,13 @@
-from cryptography.fernet import Fernet
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
 
-key = Fernet.generate_key()
-cipher = Fernet(key)
+key = b'1234567890123456'
+text = input("Enter text: ").encode()
 
-text = input("Enter text: ")
+cipher = AES.new(key, AES.MODE_ECB)
 
-encrypted = cipher.encrypt(text.encode())
-print("Encrypted:", encrypted.decode())
+encrypted = cipher.encrypt(pad(text, AES.block_size))
+print("Encrypted:", encrypted.hex())
 
-decrypted = cipher.decrypt(encrypted).decode()
-print("Decrypted:", decrypted)
+decrypted = unpad(cipher.decrypt(encrypted), AES.block_size)
+print("Decrypted:", decrypted.decode())

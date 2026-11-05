@@ -1,3 +1,5 @@
+import math
+
 p = int(input("Enter p: "))
 q = int(input("Enter q: "))
 
@@ -5,15 +7,10 @@ n = p * q
 phi = (p - 1) * (q - 1)
 
 e = 2
-while e < phi:
-    a = 1
-    while (e * a) % phi != 1:
-        a += 1
-    if a > 1:
-        break
+while math.gcd(e, phi) != 1:
     e += 1
 
-d = a
+d = pow(e, -1, phi)
 
 m = int(input("Enter message: "))
 
